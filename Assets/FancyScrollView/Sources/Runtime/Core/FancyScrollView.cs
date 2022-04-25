@@ -46,7 +46,7 @@ namespace FancyScrollView
         /// </summary>
         [SerializeField] protected Transform cellContainer = default;
 
-        readonly IList<FancyCell<TItemData, TContext>> pool = new List<FancyCell<TItemData, TContext>>();
+        protected readonly IList<FancyCell<TItemData, TContext>> pool = new List<FancyCell<TItemData, TContext>>();
 
         /// <summary>
         /// 初期化済みかどうか.
@@ -107,7 +107,11 @@ namespace FancyScrollView
         /// </summary>
         /// <param name="position">スクロール位置.</param>
         protected virtual void UpdatePosition(float position) => UpdatePosition(position, false);
-
+        /// <summary>
+        /// 影响 选项数量，重新分配
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="forceRefresh"></param>
         void UpdatePosition(float position, bool forceRefresh)
         {
             if (!initialized)
@@ -136,6 +140,7 @@ namespace FancyScrollView
             Debug.Assert(cellContainer != null);
 
             var addCount = Mathf.CeilToInt((1f - firstPosition) / cellInterval) - pool.Count;
+            var totol = pool.Count;
             for (var i = 0; i < addCount; i++)
             {
                 var cell = Instantiate(CellPrefab, cellContainer).GetComponent<FancyCell<TItemData, TContext>>();
@@ -148,11 +153,17 @@ namespace FancyScrollView
 
                 cell.SetContext(Context);
                 cell.Initialize();
+                cell.name = $"cell {totol + i}";
                 cell.SetVisible(false);
                 pool.Add(cell);
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="firstPosition"></param>
+        /// <param name="firstIndex">context数据的index</param>
+        /// <param name="forceRefresh"></param>
         void UpdateCells(float firstPosition, int firstIndex, bool forceRefresh)
         {
             for (var i = 0; i < pool.Count; i++)
@@ -182,8 +193,9 @@ namespace FancyScrollView
                 cell.UpdatePosition(position);
             }
         }
-
-        int CircularIndex(int i, int size) => size < 1 ? 0 : i < 0 ? size - 1 + (i + 1) % size : i % size;
+        
+        protected int CircularIndex(int i, int size) => size < 1 ? 0 :
+            i < 0 ? size - 1 + (i + 1) % size : i % size;
 
 #if UNITY_EDITOR
         bool cachedLoop;

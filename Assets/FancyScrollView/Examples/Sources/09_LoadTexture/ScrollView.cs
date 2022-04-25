@@ -19,7 +19,7 @@ namespace FancyScrollView.Example09
         protected override void Initialize()
         {
             base.Initialize();
-            scroller.OnValueChanged(UpdatePosition);
+            scroller.RegistOnValueChanged(UpdatePosition);
         }
 
         public void UpdateData(IList<ItemData> items)

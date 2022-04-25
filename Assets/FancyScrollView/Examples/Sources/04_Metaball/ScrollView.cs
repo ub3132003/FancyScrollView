@@ -28,8 +28,8 @@ namespace FancyScrollView.Example04
 
             Context.OnCellClicked = SelectCell;
 
-            scroller.OnValueChanged(UpdatePosition);
-            scroller.OnSelectionChanged(UpdateSelection);
+            scroller.RegistOnValueChanged(UpdatePosition);
+            scroller.RegistOnSelectionChanged(UpdateSelection);
         }
 
         public void UpdateSelection(int index)

@@ -25,6 +25,7 @@ namespace FancyScrollView
     {
         /// <summary>
         /// スクロール中にセルが再利用されるまでの余白のセル数.
+        /// 滚动时对超出界面的cell 重复利用的缓存个数. 超过多少个cell 后cell被循环使用
         /// </summary>
         /// <remarks>
         /// <c>0</c> を指定するとセルが完全に隠れた直後に再利用されます.
@@ -72,7 +73,7 @@ namespace FancyScrollView
 
         float ScrollLength => 1f / Mathf.Max(cellInterval, 1e-2f) - 1f;
 
-        float ViewportLength => ScrollLength - reuseCellMarginCount * 2f;
+        protected float ViewportLength => ScrollLength - reuseCellMarginCount * 2f;
 
         float PaddingHeadLength => (paddingHead - spacing * 0.5f) / (CellSize + spacing);
 
@@ -85,7 +86,7 @@ namespace FancyScrollView
         protected override void Initialize()
         {
             base.Initialize();
-
+            
             Context.ScrollDirection = Scroller.ScrollDirection;
             Context.CalculateScrollSize = () =>
             {
@@ -96,7 +97,7 @@ namespace FancyScrollView
             };
 
             AdjustCellIntervalAndScrollOffset();
-            Scroller.OnValueChanged(OnScrollerValueChanged);
+            Scroller.RegistOnValueChanged(OnScrollerValueChanged);
         }
 
         /// <summary>
@@ -148,6 +149,7 @@ namespace FancyScrollView
 
         /// <summary>
         /// <see cref="Scroller"/> の各種状態を更新します.
+        /// 禁用scroll bar 
         /// </summary>
         protected void RefreshScroller()
         {

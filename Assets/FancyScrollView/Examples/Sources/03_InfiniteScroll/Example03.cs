@@ -6,6 +6,7 @@
 
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace FancyScrollView.Example03
 {
@@ -22,5 +23,13 @@ namespace FancyScrollView.Example03
             scrollView.UpdateData(items);
             scrollView.SelectCell(0);
         }
+
+        public void OnScroll(BaseEventData data)
+        {
+            var pointerData = (PointerEventData)data;
+            Debug.Log(pointerData.scrollDelta);
+            //Debug.Log(data.)
+        }
     }
+
 }

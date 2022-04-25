@@ -26,8 +26,8 @@ namespace FancyScrollView.Example02
 
             Context.OnCellClicked = SelectCell;
 
-            scroller.OnValueChanged(UpdatePosition);
-            scroller.OnSelectionChanged(UpdateSelection);
+            scroller.RegistOnValueChanged(UpdatePosition);
+            scroller.RegistOnSelectionChanged(UpdateSelection);
         }
 
         void UpdateSelection(int index)

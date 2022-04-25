@@ -24,8 +24,10 @@ namespace FancyScrollView
         SerializedProperty decelerationRate;
         SerializedProperty snap;
         SerializedProperty draggable;
+        SerializedProperty wheelable;
         SerializedProperty scrollbar;
-
+        SerializedProperty wheelSensitivity;
+        SerializedProperty currentPosition;
         AnimBool showElasticity;
         AnimBool showInertiaRelatedValues;
 
@@ -36,15 +38,19 @@ namespace FancyScrollView
             movementType = serializedObject.FindProperty("movementType");
             elasticity = serializedObject.FindProperty("elasticity");
             scrollSensitivity = serializedObject.FindProperty("scrollSensitivity");
+            wheelSensitivity = serializedObject.FindProperty("wheelSensitivity");
             inertia = serializedObject.FindProperty("inertia");
             decelerationRate = serializedObject.FindProperty("decelerationRate");
             snap = serializedObject.FindProperty("snap");
             draggable = serializedObject.FindProperty("draggable");
+            wheelable = serializedObject.FindProperty("wheelable");
             scrollbar = serializedObject.FindProperty("scrollbar");
 
             showElasticity = new AnimBool(Repaint);
             showInertiaRelatedValues = new AnimBool(Repaint);
             SetAnimBools(true);
+            
+            currentPosition = serializedObject.FindProperty("currentPosition");
         }
 
         void OnDisable()
@@ -81,10 +87,15 @@ namespace FancyScrollView
             EditorGUILayout.PropertyField(movementType);
             DrawMovementTypeRelatedValue();
             EditorGUILayout.PropertyField(scrollSensitivity);
+            EditorGUILayout.PropertyField(wheelSensitivity);
             EditorGUILayout.PropertyField(inertia);
             DrawInertiaRelatedValues();
             EditorGUILayout.PropertyField(draggable);
+            EditorGUILayout.PropertyField(wheelable);
             EditorGUILayout.PropertyField(scrollbar);
+            EditorGUI.BeginDisabledGroup(true);
+            EditorGUILayout.PropertyField(currentPosition);
+            EditorGUI.EndDisabledGroup();
             serializedObject.ApplyModifiedProperties();
         }
 

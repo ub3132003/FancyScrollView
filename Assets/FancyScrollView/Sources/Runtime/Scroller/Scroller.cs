@@ -56,6 +56,7 @@ namespace FancyScrollView
         }
 
         [SerializeField] float scrollSensitivity = 1f;
+        [SerializeField] float wheelSensitivity = 1f;
 
         /// <summary>
         /// <see cref="ViewportSize"/> の端から端まで Drag したときのスクロール位置の変化量.
@@ -76,7 +77,7 @@ namespace FancyScrollView
             get => inertia;
             set => inertia = value;
         }
-
+        [Min(0)]
         [SerializeField] float decelerationRate = 0.03f;
 
         /// <summary>
@@ -109,6 +110,7 @@ namespace FancyScrollView
 
         [SerializeField] bool draggable = true;
 
+        [SerializeField] bool wheelable = true;
         /// <summary>
         /// Drag 入力を受付けるかどうか.
         /// </summary>
@@ -150,7 +152,7 @@ namespace FancyScrollView
         Vector2 beginDragPointerPosition;
         float scrollStartPosition;
         float prevPosition;
-        float currentPosition;
+        [SerializeField]float currentPosition;
 
         int totalCount;
 
@@ -211,15 +213,16 @@ namespace FancyScrollView
 
         /// <summary>
         /// スクロール位置が変化したときのコールバックを設定します.
+        /// 位置变化时调用
         /// </summary>
         /// <param name="callback">スクロール位置が変化したときのコールバック.</param>
-        public void OnValueChanged(Action<float> callback) => onValueChanged = callback;
+        public void RegistOnValueChanged(Action<float> callback) => onValueChanged = callback;
 
         /// <summary>
         /// 選択位置が変化したときのコールバックを設定します.
         /// </summary>
         /// <param name="callback">選択位置が変化したときのコールバック.</param>
-        public void OnSelectionChanged(Action<int> callback) => onSelectionChanged = callback;
+        public void RegistOnSelectionChanged(Action<int> callback) => onSelectionChanged = callback;
 
         /// <summary>
         /// アイテムの総数を設定します.
@@ -344,7 +347,8 @@ namespace FancyScrollView
         /// <inheritdoc/>
         void IScrollHandler.OnScroll(PointerEventData eventData)
         {
-            if (!draggable)
+            //if (!draggable)
+            if (!wheelable)
             {
                 return;
             }
@@ -366,7 +370,7 @@ namespace FancyScrollView
                 scrolling = true;
             }
 
-            var position = currentPosition + scrollDelta / ViewportSize * scrollSensitivity;
+            var position = currentPosition + scrollDelta / ViewportSize * wheelSensitivity;
             if (movementType == MovementType.Clamped)
             {
                 position += CalculateOffset(position);
@@ -444,7 +448,6 @@ namespace FancyScrollView
             {
                 return;
             }
-
             dragging = false;
         }
 
@@ -577,7 +580,7 @@ namespace FancyScrollView
             }
 
             prevPosition = currentPosition;
-            scrolling = false;
+            scrolling = false;         
         }
 
         float CalculateMovementAmount(float sourcePosition, float destPosition)
@@ -598,5 +601,6 @@ namespace FancyScrollView
         }
 
         float CircularPosition(float p, int size) => size < 1 ? 0 : p < 0 ? size - 1 + (p + 1) % size : p % size;
+ 
     }
 }
