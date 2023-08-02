@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8810570323977258554
 RectTransform:
   m_ObjectHideFlags: 0
@@ -168,7 +168,7 @@ GameObject:
   - component: {fileID: 312971720325695162}
   - component: {fileID: 7644133813388510625}
   - component: {fileID: -2450013387772269089}
-  - component: {fileID: 5947968740640256102}
+  - component: {fileID: 984576345518642712}
   m_Layer: 5
   m_Name: Cell
   m_TagString: Untagged
@@ -250,8 +250,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   message: {fileID: 4331356980848894850}
   image: {fileID: 7644133813388510625}
-  toggle: {fileID: 5947968740640256102}
---- !u!114 &5947968740640256102
+  button: {fileID: 984576345518642712}
+--- !u!114 &984576345518642712
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -260,7 +260,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5916365937240972947}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -292,10 +292,6 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 7644133813388510625}
-  toggleTransition: 1
-  graphic: {fileID: 4924090184804339145}
-  m_Group: {fileID: 0}
-  onValueChanged:
+  m_OnClick:
     m_PersistentCalls:
       m_Calls: []
-  m_IsOn: 0

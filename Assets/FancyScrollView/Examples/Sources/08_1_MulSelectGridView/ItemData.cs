@@ -10,6 +10,7 @@ namespace FancyScrollView.Example08_1
     {
         public int Index { get; }
 
+        public bool IsOn;
         public ItemData(int index) => Index = index;
     }
 }

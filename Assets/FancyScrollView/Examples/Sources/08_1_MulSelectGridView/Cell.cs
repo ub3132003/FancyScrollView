@@ -7,34 +7,46 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+
 namespace FancyScrollView.Example08_1
 {
     class Cell : FancyGridViewCell<ItemData, Context>
     {
         [SerializeField] Text message = default;
         [SerializeField] Image image = default;
-        [SerializeField] Toggle toggle = default;
+        [SerializeField] Button button = default;
 
         public override void Initialize()
         {
-            toggle.onValueChanged.AddListener((x) => Context.OnCellClicked?.Invoke(Index));
+            button.onClick.AddListener(() => Context.OnCellClicked?.Invoke(Index));
+            //button.AddClickActionCondition(() => Context.IsLimitSelect == false);
         }
 
         public override void UpdateContent(ItemData itemData)
         {
-            //if (Context.IsLimitSelect == true)
-            //{
-            //    toggle.SetIsOnWithoutNotify(false);
-            //    return;
-            //}
+            if(itemData == null)
+            {
+                SetConetentNull();
+                return;
+            }
             message.text = itemData.Index.ToString();
 
-            var selected = Context.SelectedIndex == Index;
-            image.color = selected
+            //var selected = Context.SelectedIndex == Index;
+            //itemData.IsOn = selected;
+            
+            //todo checkbox add
+            image.color = Context.SelectIndexList.Contains(Index)
                 ? new Color32(0, 255, 255, 100)
                 : new Color32(255, 255, 255, 77);
         }
-
+        /// <summary>
+        /// 清空cell
+        /// </summary>
+        protected void SetConetentNull()
+        {
+            message.text = "";
+            image.color = Color.white;
+        }
         protected override void UpdatePosition(float normalizedPosition, float localPosition)
         {
             base.UpdatePosition(normalizedPosition, localPosition);

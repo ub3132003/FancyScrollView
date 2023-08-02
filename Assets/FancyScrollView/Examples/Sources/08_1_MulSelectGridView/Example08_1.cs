@@ -9,6 +9,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using EasingCore;
+using Sirenix.Utilities;
 
 namespace FancyScrollView.Example08_1
 {
@@ -25,7 +26,7 @@ namespace FancyScrollView.Example08_1
 
         void Start()
         {
-            gridView.OnCellClicked(index => selectIndexInputField.text = index.ToString());
+            gridView.RegisterOnCellClicked(index => selectIndexInputField.text = index.ToString());
 
             paddingTopInputField.onValueChanged.AddListener(_ =>
                 TryParseValue(paddingTopInputField, 0, 999, value => gridView.PaddingTop = value));
@@ -55,9 +56,15 @@ namespace FancyScrollView.Example08_1
             dataCountInputField.text = "100";
 
             gridView.JumpTo(50);
-            gridView.OnSelectMax.AddListener((x) => Debug.Log($"选择上限时的 {x}"));
-        }
+            gridView.RegisterOnCellClicked(PrintSelectList);
 
+        }
+        private void PrintSelectList(int value)
+        {
+            string str = "";
+            gridView.SelectIndexList.ForEach(x => str += x.ToString() + ",");
+            Debug.Log($"{str}");
+        }
         void TryParseValue(InputField inputField, int min, int max, Action<int> success)
         {
             if (!int.TryParse(inputField.text, out int value))

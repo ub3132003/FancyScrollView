@@ -5,6 +5,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 
 namespace FancyScrollView.Example08_1
 {
@@ -16,5 +17,7 @@ namespace FancyScrollView.Example08_1
         /// 达到选择上限
         /// </summary>
         public bool IsLimitSelect;
+        //已选择的所有id
+        public List<int> SelectIndexList = new List<int>();
     }
 }
