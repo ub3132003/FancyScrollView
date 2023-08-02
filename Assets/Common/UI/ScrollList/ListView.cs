@@ -1,11 +1,7 @@
-﻿using pooling;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Assertions;
-using UnityEngine.UI;
 using UnityEngine.Pool;
-using System.Linq;
+using UnityEngine.UI;
 namespace ListView
 {
     [RequireComponent(typeof(LayoutGroup))]
@@ -36,7 +32,7 @@ namespace ListView
 
 
         ObjectPool<UICell<TItemData, TContext>> pool;
-        HashSet<UICell<TItemData, TContext>> inactiveCell=new HashSet<UICell<TItemData, TContext>>();
+        HashSet<UICell<TItemData, TContext>> inactiveCell = new HashSet<UICell<TItemData, TContext>>();
 
         #region mother
 
@@ -53,19 +49,19 @@ namespace ListView
             pool = new ObjectPool<UICell<TItemData, TContext>>(CreatePoolItem,
                 null,
                OnCellRelease
-                ); 
-            
-            
+                );
+
+
         }
         protected virtual void OnCellGet(UICell<TItemData, TContext> cell)
         {
             cell.SetVisible(true);
             cell.transform.SetAsFirstSibling();
         }
-        protected virtual void OnCellRelease(UICell<TItemData,TContext> cell)
+        protected virtual void OnCellRelease(UICell<TItemData, TContext> cell)
         {
             cell.SetVisible(false);
-            cell.transform.SetSiblingIndex(pool.CountActive-1);
+            cell.transform.SetSiblingIndex(pool.CountActive - 1);
         }
         public virtual UICell<TItemData, TContext> CreatePoolItem() => CreateItem();
         protected virtual void Refresh() => UpdatePosition(currentPosition, true);
@@ -90,7 +86,7 @@ namespace ListView
             //pool.Release(inactiveCell[index]);
             //inactiveCell.Remove(inactiveCell[index]);
             //var currentNode = inactiveCell.First;
-            
+
             //while (currentNode != null)
             //{
             //    if (currentNode.Value.Index == index)
@@ -104,13 +100,13 @@ namespace ListView
             //        currentNode = currentNode.Next;
             //    }
             //}
-      
+
         }
         protected virtual void RemoveItem(UICell<TItemData, TContext> cell)
         {
             pool.Release(cell);
             inactiveCell.Remove(cell);
-            
+
         }
         void UpdatePosition(float position, bool forceRefresh)
         {
@@ -120,7 +116,7 @@ namespace ListView
                 initialized = true;
             }
 
-            UpdateCells( forceRefresh);
+            UpdateCells(forceRefresh);
         }
 
         private UICell<TItemData, TContext> CreateItem()
@@ -142,7 +138,7 @@ namespace ListView
             cell.Index = totol;
             return cell;
         }
-        void UpdateCells( bool forceRefresh)
+        void UpdateCells(bool forceRefresh)
         {
             var length = ItemsSource.Count;
             for (int i = 0; i < length; i++)
@@ -152,7 +148,7 @@ namespace ListView
                 cell.SetVisible(true);
                 cell.UpdateContent(ItemsSource[i]);
                 inactiveCell.Add(cell);
-                
+
             }
         }
 

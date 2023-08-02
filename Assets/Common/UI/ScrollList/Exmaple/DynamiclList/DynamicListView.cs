@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace ListView.Example1
 {
@@ -14,8 +12,6 @@ namespace ListView.Example1
     {
         [SerializeField] GameObject cellPrefab = default;
         [SerializeField] float cellSize = 100;
-
-        FlexibleVertocalOrHorizontalLayout layout;
         Action<int> onSelectionChanged;
 
 
