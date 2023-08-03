@@ -6,7 +6,6 @@
 
 using EasingCore;
 using Sirenix.OdinInspector;
-using Sirenix.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,47 +24,48 @@ namespace FancyScrollView.Example08_1
         [Tooltip("可选择的最多选项数量")]
         public int MaxSelectAmount;
         [ShowInInspector]
-        public List<int> SelectIndexList=>Context.SelectIndexList;
+        public List<int> SelectIndexList => Context.SelectIndexList;
         [Tooltip("达到选择上限时")]
         public UnityEvent<int> OnSelectMax;
 
-        [SerializeField]
-        protected List<Cell> ApplyCellList;//todo 限制数量 根据max 
-        [SerializeField]
-        protected Button SubmitButton;
         protected override void SetupCellTemplate() => Setup<CellGroup>(cellPrefab);
+        /// <summary>
+        /// 添加后调用
+        /// </summary>
+        public Action<int> OnAddCell;
+        /// <summary>
+        /// 移除前调用
+        /// </summary>
+        public Action<int> OnRemoveCell;
+
+
         protected override void Initialize()
         {
             base.Initialize();
+
             Context.OnCellClicked += (x) =>
             {
-
                 if (SelectIndexList.Contains(x))
                 {
-                    ApplyCellList.First(cell => cell.Index == x).UpdateContent(null);
+                    OnRemoveCell?.Invoke(x);
                     SelectIndexList.Remove(x);
                     Context.IsLimitSelect = false;
                 }
                 else
                 {
-   
-                    if(SelectIndexList.Count < MaxSelectAmount)
+                    if (SelectIndexList.Count < MaxSelectAmount)
                     {
                         SelectIndexList.Add(x);
-                        var groupIndex = x / startAxisCellCount;
-                        ItemData data = ItemsSource[groupIndex][x% startAxisCellCount];
-                        ApplyCellList[SelectIndexList.Count - 1].Index = x;
-                        ApplyCellList[SelectIndexList.Count-1].UpdateContent(data);
+                        OnAddCell?.Invoke(x);
                     }
                     else
                     {
                         Context.IsLimitSelect = true;
-                        OnSelectMax.Invoke(x);
+                        OnSelectMax?.Invoke(x);
                     }
                 }
                 Refresh();
             };
-            ApplyCellList.ForEach(x => x.SetContext(Context));
         }
         public float PaddingTop
         {
@@ -125,7 +125,6 @@ namespace FancyScrollView.Example08_1
         public void RegisterOnCellClicked(Action<int> callback)
         {
             Context.OnCellClicked += callback;
-
         }
 
         public void ScrollTo(int index, float duration, Ease easing, Alignment alignment = Alignment.Middle)
