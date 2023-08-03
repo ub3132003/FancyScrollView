@@ -202,6 +202,7 @@ GameObject:
   - component: {fileID: 190094664}
   - component: {fileID: 190094666}
   - component: {fileID: 190094667}
+  - component: {fileID: 190094668}
   m_Layer: 5
   m_Name: Grid View
   m_TagString: Untagged
@@ -310,6 +311,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a655a79f3f87d7943b8137fccb07c000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gridView: {fileID: 190094668}
+  ApplyCellList:
+  - {fileID: 1854734600}
+  - {fileID: 324700002}
+  - {fileID: 1008891569}
+  SubmitButton: {fileID: 0}
+--- !u!114 &190094668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 190094661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eebca9a0e1cb01e4cb6485ccdbf90975, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   cellInterval: 0.046979867
   scrollOffset: 0.2818792
   loop: 0
@@ -327,11 +346,6 @@ MonoBehaviour:
   OnSelectMax:
     m_PersistentCalls:
       m_Calls: []
-  ApplyCellList:
-  - {fileID: 1854734600}
-  - {fileID: 324700002}
-  - {fileID: 1008891569}
-  SubmitButton: {fileID: 0}
 --- !u!224 &324700000 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6385477052397092788, guid: 07f14dd36b16ece4e8125759141ef919,
@@ -2341,7 +2355,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10ef559af3d5e06419e14d1c06fb1b68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridView: {fileID: 190094667}
+  gridView: {fileID: 190094668}
   paddingTopInputField: {fileID: 4840543747706549971}
   paddingBottomInputField: {fileID: 4840543746810961316}
   xSpacingInputField: {fileID: 1194550859}

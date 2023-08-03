@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace FancyScrollView.Example08_1
 {
-    class Context : FancyGridViewContext
+    public class Context : FancyGridViewContext
     {
         public int SelectedIndex = -1;
         public Action<int> OnCellClicked;

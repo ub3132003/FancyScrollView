@@ -5,13 +5,10 @@
  */
 
 using EasingCore;
-using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 
 namespace FancyScrollView.Example08_1
 {
@@ -23,7 +20,6 @@ namespace FancyScrollView.Example08_1
 
         [Tooltip("可选择的最多选项数量")]
         public int MaxSelectAmount;
-        [ShowInInspector]
         public List<int> SelectIndexList => Context.SelectIndexList;
         [Tooltip("达到选择上限时")]
         public UnityEvent<int> OnSelectMax;
