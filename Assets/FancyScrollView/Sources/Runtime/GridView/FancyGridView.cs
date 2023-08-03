@@ -63,7 +63,21 @@ namespace FancyScrollView
         public int DataCount { get; private set; }
 
         GameObject cellGroupTemplate;
-
+        /// <summary>
+        /// 由index 转化为 行列号
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        protected (int,int) GetGroupIndex(int index)
+        {
+            var groupIndex = index / startAxisCellCount;
+            return (groupIndex, index % startAxisCellCount);
+        }
+        public TItemData GetItemByIndex(int index)
+        {
+            var groupAndCol = GetGroupIndex(index);
+            return ItemsSource[groupAndCol.Item1][groupAndCol.Item2];
+        }
         /// <inheritdoc/>
         protected override void Initialize()
         {
